@@ -2,9 +2,9 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import {ReEntrancyVulnerable} from "../src/ReEntrancy/Vulnerable.sol";
-import {ReEntrancyProof} from "../src/ReEntrancy/Proof.sol";
-import {ReEntrancyExploit} from "../src/ReEntrancy/Exploit.sol";
+import {ReEntrancyVulnerable} from "../src/ReEntrancy/ReEntrancyVulnerable.sol";
+import {ReEntrancyProof} from "../src/ReEntrancy/ReEntrancyProof.sol";
+import {ReEntrancyExploit} from "../src/ReEntrancy/ReEntrancyExploit.sol";
 
 /**
  * @title Re-entrancy Test
