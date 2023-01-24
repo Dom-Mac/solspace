@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+import {ReEntrancyInterface} from "./Interfaces/ReEntrancyInterface.sol";
+
 /**
  * @title Re-entrancy
  * @author Dom-Mac <dom@dommac.dev>
@@ -20,7 +22,7 @@ pragma solidity ^0.8.13;
  *
  * @notice This contract is free from re-entrancy attacks
  */
-contract ReEntrancyProof {
+contract ReEntrancyProof is ReEntrancyInterface {
     /**
      * @dev Mapping of token holders and amounts
      */
