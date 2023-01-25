@@ -7,6 +7,9 @@ and provides a set of tools to help developers to find and fix them.
 Vulnerabilities are categorized by their type, each type has an example of a vulnerable contract,
 a fixed contract (proof) and an exploit to verify the vulnerability.
 
+- [Re-entrancy](#reentrancy-attack)
+- [Withdrawal Pattern](#withdrawal-pattern)
+
 ## ReEntrancy Attack
 
 [Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy)
@@ -105,6 +108,8 @@ This contract is free from re-entrancy attacks
         require(success, "Transfer failed.");
     }
 ```
+
+## Withdrawal Pattern
 
 ## Installation
 
