@@ -29,7 +29,7 @@ contract ReEntrancyProof is ReEntrancyInterface {
     mapping(address => uint256) public balances;
 
     /**
-     * @dev Function to withdraw your holds
+     * @dev Function to withdraw your deposited funds
      */
     function withdraw() public {
         uint256 amount = balances[msg.sender];

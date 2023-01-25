@@ -31,7 +31,7 @@ contract ReEntrancyVulnerable is ReEntrancyInterface {
     mapping(address => uint256) public balances;
 
     /**
-     * @dev Function to withdraw your holds **vulnerable**
+     * @dev Function to withdraw your deposited funds **vulnerable**
      */
     function withdraw() public {
         /**
