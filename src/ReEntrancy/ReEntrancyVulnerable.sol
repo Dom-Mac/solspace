@@ -35,7 +35,7 @@ contract ReEntrancyVulnerable is ReEntrancyInterface {
      */
     function withdraw() public {
         /**
-         * @dev The interaction is made BEFORE the state's update
+         * @dev The interaction is made BEFORE the state update
          *      **wrong**
          */
         (bool success, ) = msg.sender.call{value: balances[msg.sender]}("");

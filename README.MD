@@ -28,11 +28,11 @@ Every time an interaction is made, the cycle starts again.
 
 ```solidity
     /**
-     * @dev Function to withdraw your deposited funds **vulnerable**
+     * @dev Function to withdraw your deposited funds **vulnerable - do not use**
      */
     function withdraw() public {
         /**
-         * @dev The interaction is made BEFORE the state's update
+         * @dev The interaction is made BEFORE the state update
          *      **wrong**
          */
         (bool success, ) = msg.sender.call{value: balances[msg.sender]}("");
@@ -47,7 +47,35 @@ Every time an interaction is made, the cycle starts again.
 
 ### Fixed withdraw
 
-[Git Source](
+[Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy/ReEntrancyProof.sol)
+
+This contract is free from re-entrancy attacks
+
+```solidity
+    /**
+     * @dev Function to withdraw your deposited funds
+     */
+    function withdraw() public {
+        /**
+         * @dev Update the state
+         *      **right**
+         */
+        uint256 amount = balances[msg.sender];
+        balances[msg.sender] = 0;
+
+        /**
+         * @dev The interaction is made AFTER the state update
+         *      **right**
+         */
+        (bool success, ) = msg.sender.call{value: amount}("");
+
+        /**
+         * @dev Check if the interaction was successful
+         *      **right**
+         */
+        require(success, "Transfer failed.");
+    }
+```
 
 ## Installation
 

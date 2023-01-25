@@ -40,7 +40,7 @@ contract ReEntrancyProof is ReEntrancyInterface {
         balances[msg.sender] = 0;
 
         /**
-         * @dev The external interaction is made AFTER the state's update
+         * @dev The external interaction is made AFTER the state update
          */
         (bool success, ) = msg.sender.call{value: amount}("");
 
