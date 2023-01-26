@@ -30,22 +30,22 @@ Every time an interaction is made, the cycle starts again.
 [Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy/ReEntrancyVulnerable.sol)
 
 ```solidity
-    /**
-     * @dev Function to withdraw your deposited funds **vulnerable - do not use**
-     */
-    function withdraw() public {
-        /**
-         * @dev The interaction is made BEFORE the state update
-         *      **wrong**
-         */
-        (bool success, ) = msg.sender.call{value: balances[msg.sender]}("");
+/**
+ * @dev Function to withdraw your deposited funds **vulnerable - do not use**
+ */
+function withdraw() public {
+  /**
+   * @dev The interaction is made BEFORE the state update
+   *      **wrong**
+   */
+  (bool success, ) = msg.sender.call{ value: balances[msg.sender] }('');
 
-        /**
-         * @dev Update the state
-         *      **wrong**
-         */
-        if (success) balances[msg.sender] = 0;
-    }
+  /**
+   * @dev Update the state
+   *      **wrong**
+   */
+  if (success) balances[msg.sender] = 0;
+}
 ```
 
 ### ReEntrancy Exploit
@@ -56,25 +56,23 @@ Contract to exploit the vulnerable contract, it can be used to drain the contrac
 The receive function, fired on plain Ether transfers, is used to trigger the re-entrancy attack.
 
 ```solidity
- /**
-     * @dev Function to attack target contract
-     */
-    function exploit() external payable {
-        require(msg.value >= 1 ether);
-        target.deposit{value: 1 ether}();
-        target.withdraw();
-    }
+/**
+ * @dev Function to attack target contract
+ */
+function exploit() external payable {
+  require(msg.value >= 1 ether);
+  target.deposit{ value: 1 ether }();
+  target.withdraw();
+}
 
-    /**
-     * @dev Function executed on plain Ether transfers
-     */
-    receive() external payable {
-        if (
-            address(target).balance >= 1 ether
-        ) {
-            target.withdraw();
-        }
-    }
+/**
+ * @dev Function executed on plain Ether transfers
+ */
+receive() external payable {
+  if (address(target).balance >= 1 ether) {
+    target.withdraw();
+  }
+}
 ```
 
 ### Fixed withdraw
@@ -84,29 +82,26 @@ The receive function, fired on plain Ether transfers, is used to trigger the re-
 This contract is free from re-entrancy attacks
 
 ```solidity
-    /**
-     * @dev Function to withdraw your deposited funds
-     */
-    function withdraw() public {
-        /**
-         * @dev Update the state
-         *      **right**
-         */
-        uint256 amount = balances[msg.sender];
-        balances[msg.sender] = 0;
+/**
+ * @dev Function to withdraw your deposited funds
+ */
+function withdraw() public {
+  /**
+   * @dev Update the state
+   */
+  uint256 amount = balances[msg.sender];
+  balances[msg.sender] = 0;
 
-        /**
-         * @dev The interaction is made AFTER the state update
-         *      **right**
-         */
-        (bool success, ) = msg.sender.call{value: amount}("");
+  /**
+   * @dev The interaction is made AFTER the state update
+   */
+  (bool success, ) = msg.sender.call{ value: amount }('');
 
-        /**
-         * @dev Check if the interaction was successful
-         *      **right**
-         */
-        require(success, "Transfer failed.");
-    }
+  /**
+   * @dev Check if the interaction was successful
+   */
+  require(success, 'Transfer failed.');
+}
 ```
 
 ## Withdrawal Pattern
