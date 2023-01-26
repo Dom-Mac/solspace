@@ -1,0 +1,22 @@
+{
+  "name": "solspace",
+  "bugs": {
+    "url": "https://github.com/Dom-Mac/solspace/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dom-Mac/solspace"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-rc.1",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5"
+  },
+  "scripts": {
+    "lint": "prettier --write **.sol",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json,sol}\""
+  }
+}
