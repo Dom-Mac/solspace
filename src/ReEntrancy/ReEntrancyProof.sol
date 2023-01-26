@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {ReEntrancyInterface} from "./Interfaces/ReEntrancyInterface.sol";
+import {ReEntrancyInterface} from './Interfaces/ReEntrancyInterface.sol';
 
 /**
  * @title Re-entrancy
@@ -23,37 +23,37 @@ import {ReEntrancyInterface} from "./Interfaces/ReEntrancyInterface.sol";
  * @notice This contract is free from re-entrancy attacks
  */
 contract ReEntrancyProof is ReEntrancyInterface {
-    /**
-     * @dev Mapping of token holders and amounts
-     */
-    mapping(address => uint256) public balances;
+  /**
+   * @dev Mapping of token holders and amounts
+   */
+  mapping(address => uint256) public balances;
+
+  /**
+   * @dev Function to withdraw your deposited funds
+   */
+  function withdraw() public {
+    uint256 amount = balances[msg.sender];
 
     /**
-     * @dev Function to withdraw your deposited funds
+     * @dev Update the state before interaction
      */
-    function withdraw() public {
-        uint256 amount = balances[msg.sender];
-
-        /**
-         * @dev Update the state before interaction
-         */
-        balances[msg.sender] = 0;
-
-        /**
-         * @dev The external interaction is made AFTER the state update
-         */
-        (bool success, ) = msg.sender.call{value: amount}("");
-
-        /**
-         * @dev Check if the interaction was successful
-         */
-        require(success, "Withdrawal failed");
-    }
+    balances[msg.sender] = 0;
 
     /**
-     * @dev Function to deposit funds
+     * @dev The external interaction is made AFTER the state update
      */
-    function deposit() public payable {
-        balances[msg.sender] += msg.value;
-    }
+    (bool success, ) = msg.sender.call{value: amount}('');
+
+    /**
+     * @dev Check if the interaction was successful
+     */
+    require(success, 'Withdrawal failed');
+  }
+
+  /**
+   * @dev Function to deposit funds
+   */
+  function deposit() public payable {
+    balances[msg.sender] += msg.value;
+  }
 }

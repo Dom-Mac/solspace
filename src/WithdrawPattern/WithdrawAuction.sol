@@ -22,42 +22,42 @@ pragma solidity ^0.8.13;
  *         another action.
  */
 contract WithdrawAuction {
-    address public highestBidder;
-    uint256 public highestBid;
+  address public highestBidder;
+  uint256 public highestBid;
+  /**
+   * @dev store ethers to send to the previous highest bidder
+   */
+  mapping(address => uint256) pendingReturns;
+
+  error NotEnoughEther();
+
+  constructor() payable {
+    highestBidder = msg.sender;
+    highestBid = msg.value;
+  }
+
+  function bid() public payable {
+    if (msg.value <= highestBid) revert NotEnoughEther();
     /**
      * @dev store ethers to send to the previous highest bidder
      */
-    mapping(address => uint256) pendingReturns;
+    pendingReturns[highestBidder] += highestBid;
 
-    error NotEnoughEther();
+    highestBidder = msg.sender;
+    highestBid = msg.value;
+  }
 
-    constructor() payable {
-        highestBidder = msg.sender;
-        highestBid = msg.value;
+  function withdraw() public {
+    uint256 amount = pendingReturns[msg.sender];
+    if (amount > 0) {
+      /**
+       * @dev reset the pending return to 0
+       */
+      pendingReturns[msg.sender] = 0;
+      /**
+       * @dev send the pending return
+       */
+      payable(msg.sender).transfer(amount);
     }
-
-    function bid() public payable {
-        if (msg.value <= highestBid) revert NotEnoughEther();
-        /**
-         * @dev store ethers to send to the previous highest bidder
-         */
-        pendingReturns[highestBidder] += highestBid;
-
-        highestBidder = msg.sender;
-        highestBid = msg.value;
-    }
-
-    function withdraw() public {
-        uint256 amount = pendingReturns[msg.sender];
-        if (amount > 0) {
-            /**
-             * @dev reset the pending return to 0
-             */
-            pendingReturns[msg.sender] = 0;
-            /**
-             * @dev send the pending return
-             */
-            payable(msg.sender).transfer(amount);
-        }
-    }
+  }
 }

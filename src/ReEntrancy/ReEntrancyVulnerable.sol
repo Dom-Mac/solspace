@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {ReEntrancyInterface} from "./Interfaces/ReEntrancyInterface.sol";
+import {ReEntrancyInterface} from './Interfaces/ReEntrancyInterface.sol';
 
 /**
  * @title Re-entrancy
@@ -25,32 +25,32 @@ import {ReEntrancyInterface} from "./Interfaces/ReEntrancyInterface.sol";
  * @notice DO NOT USE - vulnerable contract
  */
 contract ReEntrancyVulnerable is ReEntrancyInterface {
+  /**
+   * @dev Mapping of token holders and amounts
+   */
+  mapping(address => uint256) public balances;
+
+  /**
+   * @dev Function to withdraw your deposited funds **vulnerable**
+   */
+  function withdraw() public {
     /**
-     * @dev Mapping of token holders and amounts
+     * @dev The interaction is made BEFORE the state update
+     *      **wrong**
      */
-    mapping(address => uint256) public balances;
+    (bool success, ) = msg.sender.call{value: balances[msg.sender]}('');
 
     /**
-     * @dev Function to withdraw your deposited funds **vulnerable**
+     * @dev Update the state
+     *      **wrong**
      */
-    function withdraw() public {
-        /**
-         * @dev The interaction is made BEFORE the state update
-         *      **wrong**
-         */
-        (bool success, ) = msg.sender.call{value: balances[msg.sender]}("");
+    if (success) balances[msg.sender] = 0;
+  }
 
-        /**
-         * @dev Update the state
-         *      **wrong**
-         */
-        if (success) balances[msg.sender] = 0;
-    }
-
-    /**
-     * @dev Function to deposit funds
-     */
-    function deposit() public payable {
-        balances[msg.sender] += msg.value;
-    }
+  /**
+   * @dev Function to deposit funds
+   */
+  function deposit() public payable {
+    balances[msg.sender] += msg.value;
+  }
 }

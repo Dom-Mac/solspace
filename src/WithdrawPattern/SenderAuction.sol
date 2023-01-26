@@ -20,27 +20,27 @@ pragma solidity ^0.8.13;
  *         re-entrancy attacks and denial of service.
  */
 contract SenderAuction {
+  /**
+   * @notice DO NOT USE - vulnerable contract
+   */
+  address public highestBidder;
+  uint256 public highestBid;
+
+  error NotEnoughEther();
+
+  constructor() payable {
+    highestBidder = msg.sender;
+    highestBid = msg.value;
+  }
+
+  function bid() public payable {
+    if (msg.value <= highestBid) revert NotEnoughEther();
     /**
-     * @notice DO NOT USE - vulnerable contract
+     * @dev send ethers to the previous highest bidder
      */
-    address public highestBidder;
-    uint256 public highestBid;
+    payable(highestBidder).transfer(highestBid);
 
-    error NotEnoughEther();
-
-    constructor() payable {
-        highestBidder = msg.sender;
-        highestBid = msg.value;
-    }
-
-    function bid() public payable {
-        if (msg.value <= highestBid) revert NotEnoughEther();
-        /**
-         * @dev send ethers to the previous highest bidder
-         */
-        payable(highestBidder).transfer(highestBid);
-
-        highestBidder = msg.sender;
-        highestBid = msg.value;
-    }
+    highestBidder = msg.sender;
+    highestBid = msg.value;
+  }
 }
