@@ -31,11 +31,6 @@ contract WithdrawAuction {
 
   error NotEnoughEther();
 
-  constructor() payable {
-    highestBidder = msg.sender;
-    highestBid = msg.value;
-  }
-
   function bid() public payable {
     if (msg.value <= highestBid) revert NotEnoughEther();
     /**

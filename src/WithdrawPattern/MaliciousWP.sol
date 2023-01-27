@@ -22,6 +22,8 @@ import {IAuction} from './Interfaces/IAuction.sol';
  *         function to be stuck forever.
  */
 contract MaliciousWP {
+  error Powned();
+
   IAuction public auction;
 
   constructor(address _auction) {
@@ -40,6 +42,6 @@ contract MaliciousWP {
    * @dev revert the transaction
    */
   receive() external payable {
-    revert();
+    revert Powned();
   }
 }
