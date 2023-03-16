@@ -106,6 +106,13 @@ function withdraw() public {
 
 ## Withdrawal Pattern
 
+The goal is to implement an auction in wich we store the highest bidder and the amount of ether sent.
+Past bidders should be able to reiceve their ethers back once their bid is overtaken.
+
+The first idea could be to send back the ethers to the previous bidders in the bid function. 
+The send pattern consists in sending ethers as the result of an effect. 
+Not respecting this pattern can lead to re-entrancy attacks and denial of service.
+
 ## Installation
 
 ```bash

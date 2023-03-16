@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {IAuction} from './Interfaces/IAuction.sol';
 
 /**
- * @title Re-entrancy
+ * @title Malicious Withdrawal Pattern
  * @author Dom-Mac <dom@dommac.dev>
  *
  * @notice The goal is to implement an auction where
