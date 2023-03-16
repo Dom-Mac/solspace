@@ -111,8 +111,6 @@ function withdraw() public {
 A re-entrancy attack can happen when the **Checks-Effects-Interactions** pattern is not
 respected during contracts development.
 
-- **Check**: Validate parameters before modifying the state
-
 
 
 
