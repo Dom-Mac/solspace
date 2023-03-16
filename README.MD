@@ -75,7 +75,7 @@ receive() external payable {
 }
 ```
 
-### Fixed withdraw
+### ReEntrancy Proof
 
 [Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy/ReEntrancyProof.sol)
 
