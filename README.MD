@@ -117,7 +117,7 @@ respected during contracts development.
 
 - **Interactions**: Call other contracts after storage has been updated accordingly
 
-Every time an interaction is made, the cycle starts again.
+
 
 
 
