@@ -115,7 +115,6 @@ respected during contracts development.
 
 - **Effects**: Change the state
 
-- **Interactions**: Call other contracts after storage has been updated accordingly
 
 
 
