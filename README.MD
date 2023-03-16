@@ -106,6 +106,21 @@ function withdraw() public {
 
 ## Withdrawal Pattern
 
+[Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy)
+
+A re-entrancy attack can happen when the **Checks-Effects-Interactions** pattern is not
+respected during contracts development.
+
+- **Check**: Validate parameters before modifying the state
+
+- **Effects**: Change the state
+
+- **Interactions**: Call other contracts after storage has been updated accordingly
+
+Every time an interaction is made, the cycle starts again.
+
+
+
 ## Installation
 
 ```bash
