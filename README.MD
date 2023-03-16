@@ -108,8 +108,6 @@ function withdraw() public {
 
 [Git Source](https://github.com/Dom-Mac/solspace/blob/f5838bdc64c22456cef26721eb6148f05fc8f839/src/ReEntrancy)
 
-A re-entrancy attack can happen when the **Checks-Effects-Interactions** pattern is not
-respected during contracts development.
 
 
 
