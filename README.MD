@@ -113,10 +113,6 @@ respected during contracts development.
 
 - **Check**: Validate parameters before modifying the state
 
-- **Effects**: Change the state
-
-
-
 
 
 
